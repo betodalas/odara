@@ -20,7 +20,6 @@ import os
 import glob
 import cgi
 import html
-from importlib import reload
 import cgitb; cgitb.enable()     # for troubleshooting
 
 
@@ -105,59 +104,135 @@ except KeyError:
 
 #loop through all records in Column B of the excel file and convert them
 #into an array. return that array
-def get_chqs(sheetName):
-    chqs = []
-    for row in range(2, sheetName.max_row + 1):
-        cellObj = sheetName["B" + str(row)]
-        eachChq = cellObj.value
-        chqs.append(eachChq)
-    return chqs
+#def get_chqs(sheetName):
+#    chqs = []
+#    for row in range(2, sheetName.max_row + 1):
+#        cellObj = sheetName["B" + str(row)]
+#        eachChq = cellObj.value
+#        chqs.append(eachChq)
+#    return chqs
 
-def get_amount(sheetName):
-    amount = []
-    for row in range(2, sheetName.max_row + 1):
-        cellObj = sheetName["C" + str(row)]
-        eachAmu = cellObj.value
-        amount.append(eachAmu)
-    return amount
+#def get_amount(sheetName):
+#    amount = []
+#    for row in range(2, sheetName.max_row + 1):
+#        cellObj = sheetName["C" + str(row)]
+#        eachAmu = cellObj.value
+#        amount.append(eachAmu)
+#    return amount
 
-cheques = get_chqs(bankSheet)
-amounts = get_amount(bankSheet)
+#cheques = get_chqs(bankSheet)
+#amounts = get_amount(bankSheet)
 
-print("Numero de verificacoes encontrados " + str(len(cheques)))
-print("Quantidades encontradas " + str(len(amounts)))
-print("\n")
+#print("Numero de verificacoes encontrados " + str(len(cheques)))
+#print("Quantidades encontradas " + str(len(amounts)))
+#print("\n")
 
 print("Processando ...")
 time.sleep(2)
 print("Conciliando ...")
 time.sleep(2)
 count = 0   #keep track of matches found
+#for row in range(2, userSheet.max_row + 1):
+#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
+#    AmcellObject = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
+
+#    if ChcellObject.value in cheques:               #check for matches in the "cheque" column
+#        if AmcellObject.value in amounts:           #check  for matches in the "amount" column
+#            AmcellObject.style = highlight          # highlight them all :)
+#            ChcellObject.style = highlight          # --do--
+#            count += 1
+def get_trios(sheetName):
+    trios = []
+
+    for row in range(2, sheetName.max_row + 1):
+        _date = sheetName["A" + str(row)]
+        val = sheetName["C" + str(row)]
+        trios.append((_date.value, val.value))
+
+    return trios
+
+
+trios = get_trios(sheetName=bankSheet)
+
+#def get_trios2(bankSheet):
+#    trios2 = []
+
+ #   for row in range(2, bankSheet.max_row + 1):
+ #       _date = bankSheet["A" + str(row)]
+ #       val = bankSheet["C" + str(row)]
+ #       trios2.append((_date.value, val.value))
+
+  #  return trios2
+
+
+
+
+#while True:
+#    see_chq = input()
+#    if see_chq == "Y":
+#        break
+#    elif see_chq == "N":
+#        print("\n")
+#        print("not displaying cheques & amounts..")
+#        print("going onward....")
+#        time.sleep(2)
+#        break
+#    else:
+#        print("Y or N")
+
+
+print("processing your data....")
+time.sleep(2)
+print("finding matches...")
+time.sleep(2)
+count = 0   #keep track of matches found
 for row in range(2, userSheet.max_row + 1):
-    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
+    DtcellObject = userSheet["A" + str(row)]
+#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
     AmcellObject = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
 
-    if ChcellObject.value in cheques:               #check for matches in the "cheque" column
-        if AmcellObject.value in amounts:           #check  for matches in the "amount" column
-            AmcellObject.style = highlight          # highlight them all :)
-            ChcellObject.style = highlight          # --do--
-            count += 1
-print(str(count) + " encontrado")
+    trio = (DtcellObject.value, AmcellObject.value)
+
+    if trio in trios:
+        DtcellObject.style = highlight
+#        ChcellObject.style = highlight
+        AmcellObject.style = highlight
+        count += 1
+
+
+#for row in range(2, bankSheet.max_row + 1):
+#    DtcellObject1 = bankSheet["A" + str(row)]
+#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
+#    AmcellObject1 = bankSheet["C" + str(row)]        #same as above for every record on column C of the excel file
+
+#    trio2 = (DtcellObject1.value, AmcellObject1.value)
+
+#    if trio2 in trios2:
+#        DtcellObject1.style = highlight
+#        ChcellObject.style = highlight
+#        AmcellObject1.style = highlight
+#        count += 1
+
+    # if ChcellObject.value in cheques:               #check for matches in the "cheque" column
+    #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
+    #         AmcellObject.style = highlight          # highlight them all :)
+    #         ChcellObject.style = highlight          # --do--
+    #     count += 1
+
+print(str(count) + " matches found")
 print("\n")
-print("aguarde ...")
+print("hold on...")
 time.sleep(1)
-print("formatando in process...")
+print("highlighting in process...")
 time.sleep(2)
-print("SUCCESS:" + str(count) + " concialiacao formatada")
+print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
-print("Criando novo arquivo")
+print("creating new file in your folder....")
 time.sleep(1)
-workBook.save("conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
-print("concialiacao.xlsx criada")
+workBook.save("/var/www/html/conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
+print("conciliacao.xlsx created")
+time.sleep(2)
+print("this script was created by Farhad Ali. Email: alifarhad557@gmail.com")
 time.sleep(2)
 print("Exiting...")
-
-      
-
-
 

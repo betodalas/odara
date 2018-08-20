@@ -1,0 +1,17 @@
+Package: python-pytest
+Status: install ok installed
+Priority: optional
+Section: python
+Installed-Size: 540
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: all
+Source: pytest
+Version: 2.8.7-4
+Depends: python-pkg-resources, python-py (>= 1.4.29), python:any (<< 2.8), python:any (>= 2.7.5-5~)
+Suggests: python-mock (>= 1.0.1)
+Description: Simple, powerful testing in Python
+ This testing tool has for objective to allow the developers to limit the
+ boilerplate code around the tests, promoting the use of built-in
+ mechanisms such as the `assert` keyword.
+Original-Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Homepage: http://pytest.org/

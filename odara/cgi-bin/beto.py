@@ -7,7 +7,7 @@
 #               (i).    usersheet - holds user records
 #               (ii).   banksheet - holds records from bank reconciliation report
 #################################################################################
-
+# -*- coding: UTF-8 -*
 ##############################################################################
 # imports required for the script to work
 import openpyxl
@@ -16,6 +16,15 @@ import sys
 import time
 import os
 import glob
+import cgi
+import html
+import cgitb; cgitb.enable()     # for troubleshooting
+
+
+if sys.version[0] == '2':
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+
 ###############################################################################
 
 os.chdir(".")       # bound path to the current directory
@@ -34,17 +43,28 @@ print("files avilable in this folder:")
 print("\n")
 
 #enum files in current directory
-files = os.listdir()
+files = os.listdir('/var/www/cgi-bin')
 i = 1
 for f in glob.glob("*.xlsx"):
     print("(" + str(i) + "). "  + str(f))
     i+= 1
 
 print("\n")
-print("enter the name of your excel file without extension:")
-wb_name = input()
+
+print("Content-Type: text/html") # HTTP header to say HTML is following
+print()                          # blank line, end of headers
+
+form = cgi.FieldStorage()
+wb_name  = html.escape(form["wb_name"].value);
+u_sheet  = html.escape(form["u_sheet"].value);
+b_sheet  = html.escape(form["b_sheet"].value);
+
+#print("Adicione o nome da planilha em a extensao:")
+#wb_name = input()
 print("\n")
-print("opening your book...")
+print(wb_name)
+print(b_sheet)
+print(u_sheet)
 time.sleep(1)
 try:
     workBook = openpyxl.load_workbook(wb_name + str(".xlsx"))
@@ -119,7 +139,7 @@ def get_trios(sheetName):
         _date = sheetName["A" + str(row)]
         desc = sheetName["B" + str(row)]
         val = sheetName["C" + str(row)]
-        trios.append((_date.value, desc.value, val.value))
+        trios.append((_date.value, val.value))
 
     return trios
 
@@ -157,7 +177,7 @@ for row in range(2, userSheet.max_row + 1):
     ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
     AmcellObject = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
 
-    trio = (DtcellObject.value, ChcellObject.value, AmcellObject.value)
+    trio = (DtcellObject.value, AmcellObject.value)
 
     if trio in trios:
         DtcellObject.style = highlight
@@ -181,7 +201,7 @@ print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
 print("creating new file in your folder....")
 time.sleep(1)
-workBook.save("ready.xlsx")             # create new file with all the matched instance highlighted automatically
+workBook.save("conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
 print("ready.xlsx created")
 time.sleep(2)
 print("this script was created by Farhad Ali. Email: alifarhad557@gmail.com")

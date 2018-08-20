@@ -1,0 +1,6 @@
+Package: libpython2.7-dev
+Status: unknown ok not-installed
+Priority: optional
+Section: libdevel
+Architecture: i386
+Multi-Arch: same

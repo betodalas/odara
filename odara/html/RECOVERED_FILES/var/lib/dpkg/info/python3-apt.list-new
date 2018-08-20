@@ -1,0 +1,20 @@
+Package: python-six
+Status: install ok installed
+Priority: optional
+Section: python
+Installed-Size: 53
+Maintainer: Colin Watson <cjwatson@debian.org>
+Architecture: all
+Multi-Arch: foreign
+Source: six
+Version: 1.10.0-3
+Depends: python:any (<< 2.8), python:any (>= 2.7.5-5~)
+Description: Python 2 and 3 compatibility library (Python 2 interface)
+ Six is a Python 2 and 3 compatibility library. It provides utility
+ functions for smoothing over the differences between the Python versions
+ with the goal of writing Python code that is compatible on both Python
+ versions.
+ .
+ This package provides Six on the Python 2 module path. It is complemented
+ by python3-six and pypy-six.
+Homepage: https://pythonhosted.org/six/

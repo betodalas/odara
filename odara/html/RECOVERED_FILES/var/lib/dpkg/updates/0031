@@ -1,0 +1,28 @@
+Package: python-lxml
+Status: install ok unpacked
+Priority: optional
+Section: python
+Installed-Size: 3207
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: i386
+Source: lxml
+Version: 3.5.0-1build1
+Provides: python2.7-lxml
+Depends: python (>= 2.7), python (<< 2.8), libc6 (>= 2.4), libxml2 (>= 2.9.0), libxslt1.1 (>= 1.1.26)
+Recommends: python-bs4, python-html5lib
+Suggests: python-lxml-dbg, python-lxml-doc
+Description: pythonic binding for the libxml2 and libxslt libraries
+ lxml is a new Python binding for libxml2 and libxslt, completely
+ independent from existing Python bindings. Its aim:
+ .
+   * Pythonic API.
+   * Documented.
+   * Use Python unicode strings in API.
+   * Safe (no segfaults).
+   * No manual memory management!
+ .
+ lxml aims to provide a Pythonic API by following as much as possible
+ the ElementTree API, trying to avoid inventing too many new APIs,
+ or the user's having to learn new things -- XML is complicated enough.
+Original-Maintainer: Matthias Klose <doko@debian.org>
+Homepage: http://lxml.de/

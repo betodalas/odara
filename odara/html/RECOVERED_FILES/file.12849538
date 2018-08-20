@@ -1,0 +1,7 @@
+Package: libjpeg-turbo8
+Status: install reinstreq half-installed
+Priority: optional
+Section: libs
+Architecture: i386
+Multi-Arch: same
+Version: 1.4.2-0ubuntu3.1

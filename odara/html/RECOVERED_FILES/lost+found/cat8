@@ -1,0 +1,17 @@
+Package: libitm1
+Status: install ok unpacked
+Priority: optional
+Section: libs
+Installed-Size: 121
+Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: i386
+Multi-Arch: same
+Source: gcc-5
+Version: 5.4.0-6ubuntu1~16.04.10
+Depends: gcc-5-base (= 5.4.0-6ubuntu1~16.04.10), libc6 (>= 2.4)
+Description: GNU Transactional Memory Library
+ GNU Transactional Memory Library (libitm) provides transaction support for
+ accesses to the memory of a process, enabling easy-to-use synchronization of
+ accesses to shared memory by several threads.
+Homepage: http://gcc.gnu.org/
+Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>

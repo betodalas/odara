@@ -14,7 +14,7 @@ include("auth.php");
 <img src="odara.png"/>
 <p>Bem vindo <?php echo $_SESSION['username']; ?>!</p>
 <p>Esta é uma area segura</p>
-<p><a href="upload.html">Acessar</a></p>
+<p><a href="upload.php">Acessar</a></p>
 <a href="logout.php">Deslogar</a>
 </div>
 </body>

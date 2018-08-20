@@ -1,0 +1,16 @@
+Package: python-setuptools
+Status: deinstall ok half-installed
+Priority: optional
+Section: python
+Installed-Size: 518
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: all
+Version: 20.7.0-1
+Config-Version: 20.7.0-1
+Provides: python-distribute
+Depends: python-pkg-resources (= 20.7.0-1), python:any (<< 2.8), python:any (>= 2.7.5-5~)
+Suggests: python-setuptools-doc
+Description: Python Distutils Enhancements
+ Extensions to the python-distutils for large or complex distributions.
+Original-Maintainer: Matthias Klose <doko@debian.org>
+Homepage: https://pypi.python.org/pypi/setuptools

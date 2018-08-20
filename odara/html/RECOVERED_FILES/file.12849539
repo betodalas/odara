@@ -1,0 +1,22 @@
+Package: libjpeg-turbo8
+Status: install reinstreq unpacked
+Priority: optional
+Section: libs
+Installed-Size: 405
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: i386
+Multi-Arch: same
+Source: libjpeg-turbo
+Version: 1.4.2-0ubuntu3.1
+Replaces: libjpeg8 (<< 8c-2ubuntu5)
+Depends: libc6 (>= 2.7)
+Pre-Depends: multiarch-support
+Breaks: libjpeg8 (<< 8c-2ubuntu5)
+Description: IJG JPEG compliant runtime library.
+ Runtime library supporting the Independent JPEG Group's standard
+ for JPEG files.
+ .
+ This package contains the shared library which is a drop in
+ replacement for libjpeg8, which has better performance than
+ standard libjpeg by use of SIMD and other optimizations.
+Homepage: http://libjpeg-turbo.virtualgl.org/
