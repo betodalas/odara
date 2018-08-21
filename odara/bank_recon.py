@@ -183,7 +183,7 @@ def get_soma(soma2):
 
     for row in range(2, soma2.max_row + 1):
         _date = soma2["A" + str(row)]
-        val = soma2 ["C" + str(row)]
+        val = soma2["C" + str(row)]
         compara_soma2.append((val.value))
 
     return soma2

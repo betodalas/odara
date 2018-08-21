@@ -39,17 +39,6 @@ highlight.fill = PatternFill(fill_type='lightUp',
                  start_color='fff000',
                 end_color='6efdfd')
 
-
-
-#satisfy openpyxl requirements for highlighting cells2
-highlight2 = NamedStyle(name="highlight2")
-highlight2.font = Font(bold=True, size=12)
-bd = Side(style='thick', color="000000")
-highlight2.border = Border(left=bd, top=bd, right=bd, bottom=bd)
-highlight2.fill = PatternFill(fill_type='lightUp',
-                 start_color='fff000',
-                end_color='fff000')
-
 print("\n")
 print("arquivos excel disponiveis nesta pasta:")
 print("\n")
@@ -168,7 +157,7 @@ trios = get_trios(sheetName=bankSheet)
 def get_trios2(bankSheet2):
     trios2 = []
 
-    for row in range(2, bankSheet2.max_row + 1):
+    for row in range(2, bankSheet.max_row + 1):
         _date = bankSheet2["A" + str(row)]
         val = bankSheet2["C" + str(row)]
         trios2.append((_date.value, val.value))
@@ -176,21 +165,6 @@ def get_trios2(bankSheet2):
     return trios2
 
 trios2 = get_trios2(bankSheet2=userSheet)
-
-
-def get_soma(soma2):
-    compara_soma2 = []
-
-    for row in range(2, soma2.max_row + 1):
-        _date = soma2["A" + str(row)]
-        val = soma2 ["C" + str(row)]
-        compara_soma2.append((val.value))
-
-    return soma2
-
-compara_soma2 = get_soma(soma2=userSheet)
-
-
 
 #while True:
 #    see_chq = input()
@@ -223,11 +197,7 @@ for row in range(2, userSheet.max_row + 1):
 #        ChcellObject.style = highlight
         AmcellObject.style = highlight
         count += 1
-    else:
-        DtcellObject.style = highlight2
-#        ChcellObject.style = highlight
-        AmcellObject.style = highlight2
-        count += 1
+
 
 for row in range(2, bankSheet.max_row + 1):
     DtcellObject1 = bankSheet["A" + str(row)]
@@ -241,12 +211,8 @@ for row in range(2, bankSheet.max_row + 1):
 #        ChcellObject.style = highlight
         AmcellObject1.style = highlight
         count += 1
-    else:
-        DtcellObject1.style = highlight2
-#        ChcellObject.style = highlight
-        AmcellObject1.style = highlight2
-        count += 1
 
+    # if ChcellObject.value in cheques:               #check for matches in the "cheque" column
     #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
     #         AmcellObject.style = highlight          # highlight them all :)
     #         ChcellObject.style = highlight          # --do--
