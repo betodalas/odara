@@ -1,0 +1,21 @@
+Package: python-imaging
+Status: install ok unpacked
+Priority: optional
+Section: python
+Installed-Size: 79
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: all
+Source: pillow
+Version: 3.1.2-0ubuntu1.1
+Replaces: python-imaging-compat (<< 1.1.7+2.0.0-1.1)
+Depends: python:any (<< 2.8), python:any (>= 2.7.5-5~), python-pil
+Breaks: python-imaging-compat (<< 1.1.7+2.0.0-1.1)
+Conflicts: python-imaging-compat (<< 1.1.7+2.0.0-1.1)
+Description: Python Imaging Library compatibility layer
+ PIL used to provide a PIL.pth file which allowed you to `import Image` but
+ this is deprecated.  Use `from PIL import Image` now, or install this
+ compatibility package to temporarily get the old behavior back.
+ .
+ This compatibility package is built for Python 2 only.
+Homepage: http://python-pillow.github.io/
+Original-Maintainer: Matthias Klose <doko@debian.org>

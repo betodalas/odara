@@ -1,0 +1,16 @@
+Package: python-openpyxl
+Status: install ok half-configured
+Priority: optional
+Section: python
+Installed-Size: 1323
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: all
+Source: openpyxl
+Version: 2.3.0-1
+Depends: python (>= 2.7), python (<< 2.8), python-jdcal
+Recommends: python-pytest, python-pil, python-imaging, python-lxml
+Description: module to read/write OpenXML xlsx/xlsm files
+ Openpyxl is a pure Python module to read/write Excel 2007 (OpenXML)
+ xlsx/xlsm files.
+Original-Maintainer: NeuroDebian Team <team@neuro.debian.net>
+Homepage: http://bitbucket.org/openpyxl/openpyxl/
