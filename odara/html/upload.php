@@ -184,7 +184,7 @@ include("auth.php");
 <?PHP
   if(!empty($_FILES['uploaded_file']))
   {
-    $path = "/var/www/cgi-bin/";
+    $path = "/var/www/odara/html/cgi-bin/";
     $path = $path . basename( $_FILES['uploaded_file']['name']);
     if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
       echo "O arquivo ".  basename( $_FILES['uploaded_file']['name']).

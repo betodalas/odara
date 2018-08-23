@@ -13,6 +13,8 @@
 ##############################################################################
 # imports required for the script to work
 import openpyxl
+from openpyxl import Workbook
+from openpyxl.reader import worksheet
 from openpyxl.styles import NamedStyle, Font, Border, Side, PatternFill
 import sys
 import time
@@ -20,7 +22,11 @@ import os
 import glob
 import cgi
 import html
-import cgitb; cgitb.enable()     # for troubleshooting
+import cgitb; cgitb.enable()
+from openpyxl import load_workbook
+wb = Workbook()
+ws = wb.active
+# for troubleshooting
 
 
 if sys.version[0] == '2':
@@ -55,7 +61,7 @@ print("arquivos excel disponiveis nesta pasta:")
 print("\n")
 
 #enum files in current directory
-files = os.listdir('/var/www/cgi-bin')
+files = os.listdir('/home/roberto/PycharmProjects/odara/')
 i = 1
 for f in glob.glob("*.xlsx"):
     print("(" + str(i) + "). "  + str(f))
@@ -66,17 +72,17 @@ print("\n")
 print("Content-Type: text/html") # HTTP header to say HTML is following
 print()                          # blank line, end of headers
 
-form = cgi.FieldStorage()
-wb_name  = html.escape(form["wb_name"].value);
-u_sheet  = html.escape(form["u_sheet"].value);
-b_sheet  = html.escape(form["b_sheet"].value);
+#form = cgi.FieldStorage()
+#wb_name  = html.escape(form["wb_name"].value);
+#u_sheet  = html.escape(form["u_sheet"].value);
+#b_sheet  = html.escape(form["b_sheet"].value);
 
-#print("Adicione o nome da planilha em a extensao:")
-#wb_name = input()
+print("Adicione o nome da planilha em a extensao:")
+wb_name = input()
 print("\n")
-print(wb_name)
-print(b_sheet)
-print(u_sheet)
+#print(wb_name)
+#print(b_sheet)
+#print(u_sheet)
 time.sleep(1)
 try:
     workBook = openpyxl.load_workbook(wb_name + str(".xlsx"))
@@ -91,10 +97,10 @@ for sheets in workBook.sheetnames:
     j += 1
 print("\n")
 print("Informe o nome da primeira aba")
-#b_sheet = aba1
+b_sheet = input()
 print("\n")
 try:
-    bankSheet = workBook.get_sheet_by_name(b_sheet)
+    bankSheet = workBook[b_sheet]
 except KeyError:
     print("Nao encontrei abas nesta planilha " + wb_name + " xlsx.")
     print("exitting....")
@@ -103,9 +109,9 @@ except KeyError:
 print("Sucesso, dados encontrados " + b_sheet)
 print("\n")
 print("Informe o nome da outra aba")
-#u_sheet = abai2
+u_sheet = input()
 try:
-    userSheet = workBook.get_sheet_by_name(u_sheet)
+    userSheet = workBook[u_sheet]
     print("\n")
     print("Sucesso, dados encontrados nesta aba: " + u_sheet)
     print("\n")
@@ -255,25 +261,14 @@ for row in range(2, bankSheet.max_row + 1):
         DtcellObject1.style = highlight2
 #        ChcellObject.style = highlight
         AmcellObject1.style = highlight2
+        AmcellObject1 = float(AmcellObject1.value)
+        wb = load_workbook(filename='conciliacao.xlsx')
+        AmcellObject1 = wb.active
+        ws['E1'] = "Soma"
+        AmcellObject1['E1'] = "=SUM(C1:C100)"
+        wb.save("formula.xlsx")
         count += 1
 
-
-for row in range(2, userSheet.max_row + 1):
-    DtcellObject3 = userSheet["A" + str(row)]
-#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
-    AmcellObject3 = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
-
-    valor = (AmcellObject3.value)
-
-    if valor in valores:
-        valores.append(valor)
-        DtcellObject3.value == DtcellObject3.value
-#        sum_1 = sum(AmcellObject3 for AmcellObject3 in valores[0] if AmcellObject3 >= 0)
-        sum_1 = float(AmcellObject3.value)
-        sum_2 = sum(sum_1)
-#        ChcellObject.style = highlight
-        print("A soma  resultou em: {}".format(AmcellObject3.value[sum_1]))
-        count += 1
 
 
     #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
@@ -291,7 +286,7 @@ print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
 print("creating new file in your folder....")
 time.sleep(1)
-workBook.save("/var/www/html/conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
+workBook.save("/home/roberto/PycharmProjects/odara/conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
 print("conciliacao.xlsx created")
 time.sleep(2)
 print("this script was created by Farhad Ali. Email: alifarhad557@gmail.com")

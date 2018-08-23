@@ -43,7 +43,7 @@ print("files avilable in this folder:")
 print("\n")
 
 #enum files in current directory
-files = os.listdir('/var/www/cgi-bin')
+files = os.listdir('/var/www/odara/html/cgi-bin')
 i = 1
 for f in glob.glob("*.xlsx"):
     print("(" + str(i) + "). "  + str(f))
@@ -54,17 +54,10 @@ print("\n")
 print("Content-Type: text/html") # HTTP header to say HTML is following
 print()                          # blank line, end of headers
 
-form = cgi.FieldStorage()
-wb_name  = html.escape(form["wb_name"].value);
-u_sheet  = html.escape(form["u_sheet"].value);
-b_sheet  = html.escape(form["b_sheet"].value);
 
-#print("Adicione o nome da planilha em a extensao:")
-#wb_name = input()
+print("Adicione o nome da planilha em a extensao:")
+wb_name = input()
 print("\n")
-print(wb_name)
-print(b_sheet)
-print(u_sheet)
 time.sleep(1)
 try:
     workBook = openpyxl.load_workbook(wb_name + str(".xlsx"))
