@@ -154,8 +154,7 @@ and password='".md5($password)."'";
 						<div class="wrap-login100-form-btn">
 
 							<div class="login100-form-bgbtn"></div>
-
-                                                         <input class="login100-form-btn" name="submit" type="submit" />                                                         <button class="login100-form-btn">Enviar</button>
+                             <button class="login100-form-btn" name="sumit" type="sumit">Enviar</button>
 
 					</div>
 
