@@ -28,67 +28,65 @@ from openpyxl.utils import get_column_letter
 
 cgitb.enable()
 from openpyxl import load_workbook
+
 wb = Workbook()
 ws = wb.active
 # for troubleshooting
 from collections import Counter
 
-
 if sys.version[0] == '2':
     reload(sys)
     sys.setdefaultencoding("utf-8")
 
-#sys.path.insert(0, "/var/www/cgi-bin/bank_recon.py")
-os.chdir(".")       # bound path to the current directory
+# sys.path.insert(0, "/var/www/cgi-bin/bank_recon.py")
+os.chdir(".")  # bound path to the current directory
 
-#satisfy openpyxl requirements for highlighting cells
+# satisfy openpyxl requirements for highlighting cells
 highlight = NamedStyle(name="highlight")
 highlight.font = Font(bold=True, size=12)
 bd = Side(style='thick', color="000000")
 highlight.border = Border(left=bd, top=bd, right=bd, bottom=bd)
 highlight.fill = PatternFill(fill_type='lightUp',
-                 start_color='fff000',
-                end_color='6efdfd')
+                             start_color='fff000',
+                             end_color='6efdfd')
 
-
-
-#satisfy openpyxl requirements for highlighting cells2
+# satisfy openpyxl requirements for highlighting cells2
 highlight2 = NamedStyle(name="highlight2")
 highlight2.font = Font(bold=True, size=12)
 bd = Side(style='thick', color="000000")
 highlight2.border = Border(left=bd, top=bd, right=bd, bottom=bd)
 highlight2.fill = PatternFill(fill_type='lightUp',
-                 start_color='fff000',
-                end_color='fff000')
+                              start_color='fff000',
+                              end_color='fff000')
 
 print("\n")
 print("arquivos excel disponiveis nesta pasta:")
 print("\n")
 
-#enum files in current directory
+# enum files in current directory
 # files = os.listdir('/home/roberto/PycharmProjects/odara/')
-files = os.listdir('/home/bruno_cardoso/workspace/excel')
+files = os.listdir('/home/roberto/PycharmProjects/odara')
 i = 1
 for f in glob.glob("*.xlsx"):
-    print("(" + str(i) + "). "  + str(f))
-    i+= 1
+    print("(" + str(i) + "). " + str(f))
+    i += 1
 
 print("\n")
 
-print("Content-Type: text/html") # HTTP header to say HTML is following
-print()                          # blank line, end of headers
+print("Content-Type: text/html")  # HTTP header to say HTML is following
+print()  # blank line, end of headers
 
-#form = cgi.FieldStorage()
-#wb_name  = html.escape(form["wb_name"].value);
-#u_sheet  = html.escape(form["u_sheet"].value);
-#b_sheet  = html.escape(form["b_sheet"].value);
+# form = cgi.FieldStorage()
+# wb_name  = html.escape(form["wb_name"].value);
+# u_sheet  = html.escape(form["u_sheet"].value);
+# b_sheet  = html.escape(form["b_sheet"].value);
 
 print("Adicione o nome da planilha em a extensao:")
 wb_name = input()
 print("\n")
-#print(wb_name)
-#print(b_sheet)
-#print(u_sheet)
+# print(wb_name)
+# print(b_sheet)
+# print(u_sheet)
 time.sleep(1)
 try:
     workBook = openpyxl.load_workbook(wb_name + str(".xlsx"))
@@ -99,7 +97,7 @@ print("Eu encontrei as seguintes abas na planilha")
 print("\n")
 j = 1;
 for sheets in workBook.sheetnames:
-    print("(" + str(j) + "). "  + str(sheets))
+    print("(" + str(j) + "). " + str(sheets))
     j += 1
 print("\n")
 print("Informe o nome da primeira aba")
@@ -125,9 +123,9 @@ except KeyError:
     print("Nao encontrei dados nesta aba " + wb_name + " xlsx.")
     sys.exit()
 
-#loop through all records in Column B of the excel file and convert them
-#into an array. return that array
-#def get_chqs(sheetName):
+# loop through all records in Column B of the excel file and convert them
+# into an array. return that array
+# def get_chqs(sheetName):
 #    chqs = []
 #    for row in range(2, sheetName.max_row + 1):
 #        cellObj = sheetName["B" + str(row)]
@@ -135,7 +133,7 @@ except KeyError:
 #        chqs.append(eachChq)
 #    return chqs
 
-#def get_amount(sheetName):
+# def get_amount(sheetName):
 #    amount = []
 #    for row in range(2, sheetName.max_row + 1):
 #        cellObj = sheetName["C" + str(row)]
@@ -143,19 +141,21 @@ except KeyError:
 #        amount.append(eachAmu)
 #    return amount
 
-#cheques = get_chqs(bankSheet)
-#amounts = get_amount(bankSheet)
+# cheques = get_chqs(bankSheet)
+# amounts = get_amount(bankSheet)
 
-#print("Numero de verificacoes encontrados " + str(len(cheques)))
-#print("Quantidades encontradas " + str(len(amounts)))
-#print("\n")
+# print("Numero de verificacoes encontrados " + str(len(cheques)))
+# print("Quantidades encontradas " + str(len(amounts)))
+# print("\n")
 
 print("Processando ...")
 time.sleep(2)
 print("Conciliando ...")
 time.sleep(2)
-count = 0   #keep track of matches found
-#for row in range(2, userSheet.max_row + 1):
+count = 0  # keep track of matches found
+
+
+# for row in range(2, userSheet.max_row + 1):
 #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
 #    AmcellObject = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
 
@@ -177,6 +177,7 @@ def get_trios(sheetName):
 
 trios = get_trios(sheetName=bankSheet)
 
+
 def get_trios2(bankSheet2):
     trios2 = []
 
@@ -187,8 +188,8 @@ def get_trios2(bankSheet2):
 
     return trios2
 
-trios2 = get_trios2(bankSheet2=userSheet)
 
+trios2 = get_trios2(bankSheet2=userSheet)
 
 # def get_soma(soma2):
 #     compara_soma2 = []
@@ -215,10 +216,7 @@ trios2 = get_trios2(bankSheet2=userSheet)
 # # datas = get_valor(valor=userSheet)
 
 
-
-
-
-#while True:
+# while True:
 #    see_chq = input()
 #    if see_chq == "Y":
 #        break
@@ -236,63 +234,69 @@ print("processing your data....")
 time.sleep(2)
 print("finding matches...")
 time.sleep(2)
-count = 0   #keep track of matches found
+count = 0  # keep track of matches found
 bankSheet["E1"].value = 'data'
-e_counter=2
+e_counter = 2
+date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
+
 for row in range(2, userSheet.max_row + 1):
     DtcellObject = userSheet["A" + str(row)]
-#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
-    AmcellObject = userSheet["C" + str(row)]        #same as above for every record on column C of the excel file
+    #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
+    AmcellObject = userSheet["C" + str(row)]  # same as above for every record on column C of the excel file
 
     trio = (DtcellObject.value, AmcellObject.value)
 
+
     if trio in trios:
+        DtcellObject.style = date_style
         DtcellObject.style = highlight
-#        ChcellObject.style = highlight
+        #        ChcellObject.style = highlight
         AmcellObject.style = highlight
         count += 1
     else:
+        DtcellObject.style = date_style
         DtcellObject.style = highlight2
-#        ChcellObject.style = highlight
+        #        ChcellObject.style = highlight
         AmcellObject.style = highlight2
         count += 1
 
-date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
 
 for row in range(2, bankSheet.max_row + 1):
 
     DtcellObject1 = bankSheet["A" + str(row)]
-    DtcellObject1.style = date_style
-#    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
-    AmcellObject1 = bankSheet["C" + str(row)]        #same as above for every record on column C of the excel file
+    #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
+    AmcellObject1 = bankSheet["C" + str(row)]  # same as above for every record on column C of the excel file
 
     trio2 = (DtcellObject1.value, AmcellObject1.value)
+    DtcellObject1.style = date_style
 
     if trio2 in trios2:
+        DtcellObject1.style = date_style
         DtcellObject1.style = highlight
-#        ChcellObject.style = highlight
+                #        ChcellObject.style = highlight
         AmcellObject1.style = highlight
         count += 1
     else:
+        DtcellObject1.style = date_style
         DtcellObject1.style = highlight2
-#        ChcellObject.style = highlight
+        #        ChcellObject.style = highlight
         AmcellObject1.style = highlight2
-        print (str(DtcellObject1.value))
+        print(str(DtcellObject1.value))
         campo_data = DtcellObject1.value
         # book = openpyxl.load_workbook('conciliacao.xlsx')
         # wb = openpyxl.Workbook()
 
         # sheet = wb.active
-        
+
         DatesObject = bankSheet["E" + str(e_counter)]
         DatesObject.value = campo_data
         DatesObject.style = date_style
-        e_counter+=1
+        e_counter += 1
+
         # wb.save("formula.xlsx")
 
+
         print(campo_data)
-
-
 
     #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
     #         AmcellObject.style = highlight          # highlight them all :)
@@ -309,7 +313,9 @@ print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
 print("creating new file in your folder....")
 time.sleep(1)
-workBook.save('/home/bruno_cardoso/workspace/excel/conciliacao.xlsx')             # create new file with all the matched instance highlighted automatically
+bankSheet['F2'] = "=SOMASES($C$2:$C$10000;$A$2:$A$10000;E2)"
+workBook.save(
+    '/home/roberto/PycharmProjects/odara/conciliacao.xlsx')  # create new file with all the matched instance highlighted automatically
 print("conciliacao.xlsx created")
 time.sleep(2)
 time.sleep(2)
