@@ -15,18 +15,23 @@
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.reader import worksheet
-from openpyxl.styles import NamedStyle, Font, Border, Side, PatternFill
+from openpyxl.styles import NamedStyle, Font, Border, Side, PatternFill, Alignment
 import sys
 import time
 import os
 import glob
 import cgi
 import html
-import cgitb; cgitb.enable()
+import cgitb;
+
+from openpyxl.utils import get_column_letter
+
+cgitb.enable()
 from openpyxl import load_workbook
 wb = Workbook()
 ws = wb.active
 # for troubleshooting
+from collections import Counter
 
 
 if sys.version[0] == '2':
@@ -61,7 +66,8 @@ print("arquivos excel disponiveis nesta pasta:")
 print("\n")
 
 #enum files in current directory
-files = os.listdir('/home/roberto/PycharmProjects/odara/')
+# files = os.listdir('/home/roberto/PycharmProjects/odara/')
+files = os.listdir('/home/bruno_cardoso/workspace/excel')
 i = 1
 for f in glob.glob("*.xlsx"):
     print("(" + str(i) + "). "  + str(f))
@@ -184,29 +190,33 @@ def get_trios2(bankSheet2):
 trios2 = get_trios2(bankSheet2=userSheet)
 
 
-def get_soma(soma2):
-    compara_soma2 = []
+# def get_soma(soma2):
+#     compara_soma2 = []
 
-    for row in range(2, soma2.max_row + 1):
-        _date = soma2["A" + str(row)]
-#        val = soma2["C" = int(row)]
-        compara_soma2.append((_date.value))
+#     for row in range(2, soma2.max_row + 1):
+#         _date = soma2["A" + str(row)]
+# #        val = soma2["C" = int(row)]
+#         compara_soma2.append((_date.value))
 
-    return compara_soma2
+#     return compara_soma2
 
-compara_soma2 = get_soma(soma2=userSheet)
+# compara_soma2 = get_soma(soma2=userSheet)
 
-def get_valor(valor):
-    valores = []
+# def get_data(data):
+#     datas = []
 
-    for row in range(2, valor.max_row + 1):
-        val = valor["C" + str(row)]
-#       val = soma2["C" = int(row)]
-        valores.append((val.value))
+#     for row in range(2, valor.max_row+ 1):
+#         val = valor["C" + str(row)]
+# #       val = soma2["C" = int(row)]
+#         valores.append((val.value))
 
-    return valores
+#     return valores
 
-valores = get_valor(valor=userSheet)
+# # datas = get_valor(valor=userSheet)
+
+
+
+
 
 #while True:
 #    see_chq = input()
@@ -227,6 +237,8 @@ time.sleep(2)
 print("finding matches...")
 time.sleep(2)
 count = 0   #keep track of matches found
+bankSheet["E1"].value = 'data'
+e_counter=2
 for row in range(2, userSheet.max_row + 1):
     DtcellObject = userSheet["A" + str(row)]
 #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
@@ -245,8 +257,12 @@ for row in range(2, userSheet.max_row + 1):
         AmcellObject.style = highlight2
         count += 1
 
+date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
+
 for row in range(2, bankSheet.max_row + 1):
+
     DtcellObject1 = bankSheet["A" + str(row)]
+    DtcellObject1.style = date_style
 #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
     AmcellObject1 = bankSheet["C" + str(row)]        #same as above for every record on column C of the excel file
 
@@ -261,13 +277,20 @@ for row in range(2, bankSheet.max_row + 1):
         DtcellObject1.style = highlight2
 #        ChcellObject.style = highlight
         AmcellObject1.style = highlight2
-        AmcellObject1 = float(AmcellObject1.value)
-        wb = load_workbook(filename='conciliacao.xlsx')
-        AmcellObject1 = wb.active
-        ws['E1'] = "Soma"
-        AmcellObject1['E1'] = "=SUM(C1:C100)"
-        wb.save("formula.xlsx")
-        count += 1
+        print (str(DtcellObject1.value))
+        campo_data = DtcellObject1.value
+        # book = openpyxl.load_workbook('conciliacao.xlsx')
+        # wb = openpyxl.Workbook()
+
+        # sheet = wb.active
+        
+        DatesObject = bankSheet["E" + str(e_counter)]
+        DatesObject.value = campo_data
+        DatesObject.style = date_style
+        e_counter+=1
+        # wb.save("formula.xlsx")
+
+        print(campo_data)
 
 
 
@@ -286,10 +309,10 @@ print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
 print("creating new file in your folder....")
 time.sleep(1)
-workBook.save("/home/roberto/PycharmProjects/odara/conciliacao.xlsx")             # create new file with all the matched instance highlighted automatically
+workBook.save('/home/bruno_cardoso/workspace/excel/conciliacao.xlsx')             # create new file with all the matched instance highlighted automatically
 print("conciliacao.xlsx created")
 time.sleep(2)
-print("this script was created by Farhad Ali. Email: alifarhad557@gmail.com")
 time.sleep(2)
 print("Exiting...")
+
 
