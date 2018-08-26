@@ -65,7 +65,7 @@ print("\n")
 
 # enum files in current directory
 # files = os.listdir('/home/roberto/PycharmProjects/odara/')
-files = os.listdir('/home/roberto/PycharmProjects/odara')
+files = os.listdir('/home/biaenzo/odara/odara')
 i = 1
 for f in glob.glob("*.xlsx"):
     print("(" + str(i) + "). " + str(f))
@@ -167,10 +167,15 @@ count = 0  # keep track of matches found
 def get_trios(sheetName):
     trios = []
 
+    def reset(num):
+        return str(num).replace('-', '')
+
     for row in range(2, sheetName.max_row + 1):
         _date = sheetName["A" + str(row)]
         val = sheetName["C" + str(row)]
-        trios.append((_date.value, val.value))
+        val = val.value
+        val = reset(val)
+        trios.append((_date.value, val))
 
     return trios
 
@@ -181,15 +186,24 @@ trios = get_trios(sheetName=bankSheet)
 def get_trios2(bankSheet2):
     trios2 = []
 
+    def reset(num):
+        return str(num).replace('-', '')
+
     for row in range(2, bankSheet2.max_row + 1):
         _date = bankSheet2["A" + str(row)]
         val = bankSheet2["C" + str(row)]
-        trios2.append((_date.value, val.value))
+        val = val.value
+        val = reset(val)
+        trios2.append((_date.value, val))
 
     return trios2
 
 
 trios2 = get_trios2(bankSheet2=userSheet)
+print(trios2)
+
+def reset(num):
+  return str(num).replace('-', '')
 
 # def get_soma(soma2):
 #     compara_soma2 = []
@@ -242,19 +256,25 @@ date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
 for row in range(2, userSheet.max_row + 1):
     DtcellObject = userSheet["A" + str(row)]
     #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
-    AmcellObject = userSheet["C" + str(row)]  # same as above for every record on column C of the excel file
+    AmcellObject = userSheet["C" + str(row)]
 
-    trio = (DtcellObject.value, AmcellObject.value)
+    # same as above for every record on column C of the excel file
 
+    trio = (DtcellObject.value, reset(AmcellObject.value))
 
     if trio in trios:
-        DtcellObject.style = date_style
+        print('Igual')
+
         DtcellObject.style = highlight
         #        ChcellObject.style = highlight
         AmcellObject.style = highlight
+        AmcellObject = AmcellObject.value
+        AmcellObject = reset(AmcellObject)
+        print(AmcellObject)
         count += 1
+
     else:
-        DtcellObject.style = date_style
+
         DtcellObject.style = highlight2
         #        ChcellObject.style = highlight
         AmcellObject.style = highlight2
@@ -266,21 +286,22 @@ for row in range(2, bankSheet.max_row + 1):
     DtcellObject1 = bankSheet["A" + str(row)]
     #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
     AmcellObject1 = bankSheet["C" + str(row)]  # same as above for every record on column C of the excel file
-
-    trio2 = (DtcellObject1.value, AmcellObject1.value)
     DtcellObject1.style = date_style
 
+    trio2 = (DtcellObject1.value, reset(AmcellObject1.value))
+
+
     if trio2 in trios2:
-        DtcellObject1.style = date_style
         DtcellObject1.style = highlight
                 #        ChcellObject.style = highlight
         AmcellObject1.style = highlight
         count += 1
     else:
-        DtcellObject1.style = date_style
         DtcellObject1.style = highlight2
         #        ChcellObject.style = highlight
         AmcellObject1.style = highlight2
+        AmcellObject1 = AmcellObject.value
+        AmcellObject1 = reset(AmcellObject)
         print(str(DtcellObject1.value))
         campo_data = DtcellObject1.value
         # book = openpyxl.load_workbook('conciliacao.xlsx')
@@ -296,7 +317,8 @@ for row in range(2, bankSheet.max_row + 1):
         # wb.save("formula.xlsx")
 
 
-        print(campo_data)
+
+
 
     #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
     #         AmcellObject.style = highlight          # highlight them all :)
@@ -313,12 +335,13 @@ print("SUCCESS:" + str(count) + " matches highlighted")
 time.sleep(1)
 print("creating new file in your folder....")
 time.sleep(1)
-bankSheet['F2'] = "=SOMASES($C$2:$C$10000;$A$2:$A$10000;E2)"
+bankSheet['F2'] = "=SUMIFS($C$2:$C$10000,$A$2:$A$10000,E2)"
 workBook.save(
-    '/home/roberto/PycharmProjects/odara/conciliacao.xlsx')  # create new file with all the matched instance highlighted automatically
+    '/home/biaenzo/odara/odara/conciliacao.xlsx')  # create new file with all the matched instance highlighted automatically
 print("conciliacao.xlsx created")
 time.sleep(2)
 time.sleep(2)
 print("Exiting...")
+
 
 
