@@ -263,8 +263,10 @@ bankSheet["E1"].value = 'data'
 bankSheet["H1"].value = 'Soma saída'
 e_counter = 2
 
-userSheet["D1"].value = 'Entrada'
-userSheet["F1"].value = 'Soma valores de saida'
+userSheet["D1"].value = 'Entrada Data'
+userSheet["E1"].value = 'Entrada Valor'
+
+userSheet["G1"].value = 'Soma valores de saida'
 x_counter = 2
 date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
 
@@ -274,12 +276,15 @@ for row in range(2, userSheet.max_row + 1):
     AmcellObject = userSheet["C" + str(row)]
     trio3 = (str(AmcellObject.value))
     campo_valor = AmcellObject.value
+    campo_data = DtcellObject.value
 
     for x in trio3:
         if '-' not in trio3:
             # create new sheet
-            DatesObject1 = userSheet["D" + str(x_counter)]
+            DatesObject1 = userSheet["E" + str(x_counter)]
             DatesObject1.value = campo_valor
+            DatesObject2 = userSheet["D" + str(x_counter)]
+            DatesObject2.value = campo_data
             x_counter += 1
             AmcellObject.value = None
             AmcellObject.style = highlight3
@@ -365,7 +370,7 @@ bankSheet['F2'] = "=SUMIFS($C$2:$C$10000,$A$2:$A$10000,E2)"
 
 bankSheet['H2'] = "=SUM(C2:C1000)"
 
-userSheet['f2'] = "=SUM(C2:C1000)"
+userSheet['G2'] = "=SUM(C2:C1000)"
 
 workBook.save(
     '/home/biaenzo/odara/odara/conciliacao.xlsx')  # create new file with all the matched instance highlighted automatically
