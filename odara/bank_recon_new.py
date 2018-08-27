@@ -59,6 +59,14 @@ highlight2.fill = PatternFill(fill_type='lightUp',
                               start_color='fff000',
                               end_color='fff000')
 
+highlight3 = NamedStyle(name="highlight3")
+highlight3.font = Font(bold=True, size=12)
+bd = Side(style='thick', color="000000")
+highlight3.border = Border(left=bd, top=bd, right=bd, bottom=bd)
+highlight3.fill = PatternFill(fill_type='lightUp',
+                             start_color='fff000',
+                             end_color='808080')
+
 print("\n")
 print("arquivos excel disponiveis nesta pasta:")
 print("\n")
@@ -202,8 +210,10 @@ def get_trios2(bankSheet2):
 trios2 = get_trios2(bankSheet2=userSheet)
 print(trios2)
 
+
 def reset(num):
-  return str(num).replace('-', '')
+    return str(num).replace('-', '')
+
 
 # def get_soma(soma2):
 #     compara_soma2 = []
@@ -257,6 +267,12 @@ for row in range(2, userSheet.max_row + 1):
     DtcellObject = userSheet["A" + str(row)]
     #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
     AmcellObject = userSheet["C" + str(row)]
+    trio3 = (str(AmcellObject.value))
+
+    for x in trio3:
+        if '-' not in trio3:
+            AmcellObject.style = highlight3
+
 
     # same as above for every record on column C of the excel file
 
@@ -268,8 +284,6 @@ for row in range(2, userSheet.max_row + 1):
         DtcellObject.style = highlight
         #        ChcellObject.style = highlight
         AmcellObject.style = highlight
-        AmcellObject = AmcellObject.value
-        AmcellObject = reset(AmcellObject)
         print(AmcellObject)
         count += 1
 
@@ -280,6 +294,11 @@ for row in range(2, userSheet.max_row + 1):
         AmcellObject.style = highlight2
         count += 1
 
+        trio3 = (str(AmcellObject.value))
+
+        for x in trio3:
+            if '-' not in trio3:
+                AmcellObject.style = highlight3
 
 for row in range(2, bankSheet.max_row + 1):
 
@@ -290,18 +309,18 @@ for row in range(2, bankSheet.max_row + 1):
 
     trio2 = (DtcellObject1.value, reset(AmcellObject1.value))
 
-
     if trio2 in trios2:
         DtcellObject1.style = highlight
-                #        ChcellObject.style = highlight
+        #        ChcellObject.style = highlight
         AmcellObject1.style = highlight
         count += 1
+
+
     else:
         DtcellObject1.style = highlight2
         #        ChcellObject.style = highlight
         AmcellObject1.style = highlight2
-        AmcellObject1 = AmcellObject.value
-        AmcellObject1 = reset(AmcellObject)
+        AmcellObject1 = AmcellObject1.value
         print(str(DtcellObject1.value))
         campo_data = DtcellObject1.value
         # book = openpyxl.load_workbook('conciliacao.xlsx')
@@ -315,10 +334,6 @@ for row in range(2, bankSheet.max_row + 1):
         e_counter += 1
 
         # wb.save("formula.xlsx")
-
-
-
-
 
     #     if AmcellObject.value in amounts:           #check  for matches in the "amount" column
     #         AmcellObject.style = highlight          # highlight them all :)
@@ -342,6 +357,4 @@ print("conciliacao.xlsx created")
 time.sleep(2)
 time.sleep(2)
 print("Exiting...")
-
-
 
