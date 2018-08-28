@@ -270,6 +270,8 @@ userSheet["G1"].value = 'Soma valores de saida'
 x_counter = 2
 date_style = NamedStyle(name='datetime', number_format='DD/MM/YYYY')
 
+data_set = set()
+data_set2 = set()
 for row in range(2, userSheet.max_row + 1):
     DtcellObject = userSheet["A" + str(row)]
     #    ChcellObject = userSheet["B" + str(row)]        #get cell Object for every record found on column B of excel sheet
@@ -285,12 +287,18 @@ for row in range(2, userSheet.max_row + 1):
             DatesObject1.value = campo_valor
             DatesObject2 = userSheet["D" + str(x_counter)]
             DatesObject2.value = campo_data
-            x_counter += 1
+            if campo_valor not in data_set2:
+                DatesObject1 = userSheet["E" + str(x_counter)]
+                DatesObject1.value = campo_valor
+
+                x_counter += 1
+                data_set2.add(campo_valor)
+
+
             AmcellObject.value = None
             AmcellObject.style = highlight3
 
-
-    # same as above for every record on column C of the excel file
+   # same as above for every record on column C of the excel file
 
     trio = (DtcellObject.value, reset(AmcellObject.value))
 
@@ -344,10 +352,12 @@ for row in range(2, bankSheet.max_row + 1):
 
         # sheet = wb.active
 
-        DatesObject = bankSheet["E" + str(e_counter)]
-        DatesObject.value = campo_data
-        DatesObject.style = date_style
-        e_counter += 1
+        if campo_data not in data_set:
+            DatesObject = bankSheet["E" + str(e_counter)]
+            DatesObject.value = campo_data
+            DatesObject.style = date_style
+            e_counter += 1
+            data_set.add(campo_data)
 
         # wb.save("formula.xlsx")
 
@@ -378,4 +388,5 @@ print("conciliacao.xlsx created")
 time.sleep(2)
 time.sleep(2)
 print("Exiting...")
+
 
